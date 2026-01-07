@@ -1,3 +1,4 @@
+import os
 from importlib import metadata
 
 from flask import Flask, jsonify
@@ -28,4 +29,5 @@ def create_app() -> Flask:
     return app
 
 if __name__ == "__main__":
-    create_app().run(debug=True, port=8000)
+    port = int(os.environ.get("PORT", "8000"))
+    create_app().run(debug=True, port=port)
