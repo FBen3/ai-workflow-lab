@@ -28,5 +28,4 @@ def create_app() -> Flask:
     return app
 
 if __name__ == "__main__":
-    print("Ben")
     create_app().run(debug=True, port=8000)
