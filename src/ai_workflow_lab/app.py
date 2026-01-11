@@ -1,6 +1,6 @@
 import os
-import threading
 import time
+import threading
 from importlib import metadata
 
 from flask import Flask, jsonify, request
@@ -18,13 +18,13 @@ def create_app() -> Flask:
 
     app_start_time = time.monotonic()
     request_count = 0
-    count_lock = threading.Lock()
+    lock = threading.Lock()
 
     @app.before_request
     def count_request():
         nonlocal request_count
         if request.path != "/metrics":
-            with count_lock:
+            with lock:
                 request_count += 1
 
     @app.get("/health")
