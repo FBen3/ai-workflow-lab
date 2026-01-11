@@ -1,0 +1,27 @@
+version: 2.1
+
+jobs:
+  test:
+    docker:
+    - image: cimg/python:3.13
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install uv
+          commnad: python -m pip install --upgrade pip uv
+
+      - run:
+          name: Install deps (uv.lock)
+          command: uv sync --frozen
+
+      - run:
+          name: Run tests
+          command: uv run pytest -q
+
+workflows:
+  ci:
+    jobs:
+      - test
+
