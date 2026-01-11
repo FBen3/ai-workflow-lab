@@ -29,7 +29,7 @@ jobs:
       # Save cache for next runs
       - save_cache:
           key: v1-uv-venv-{{ checksum "uv.lock" }}
-          path:
+          paths:
             - .venv
             - /home/circleci/.cache/uv
 
