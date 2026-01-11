@@ -1,0 +1,40 @@
+version: 2.1
+
+jobs:
+  test:
+    docker:
+      - image: cimg/python:3.13
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install uv
+          command: python -m pip install --upgrade pip uv
+
+      # Restore cached venv + uv cache based on uv.lock
+      - restore_cache:
+          keys:
+            - v1-uv-venv-{{ checksum "uv.lock" }}
+            - v1-uv-venv-
+
+      - run:
+          name: Sync deps
+          command: uv sync --frozen
+
+      - run: 
+          name: Run tests
+          command: uv run pytest -q
+
+      # Save cache for next runs
+      - save_cache:
+          key: v1-uv-venv-{{ checksum "uv.lock" }}
+          paths:
+            - .venv
+            - /home/circleci/.cache/uv
+
+workflows:
+  ci:
+    jobs:
+      - test
+
