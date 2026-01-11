@@ -10,7 +10,7 @@ jobs:
 
       - run:
           name: Install uv
-          commnad: python -m pip install --upgrade pip uv
+          command: python -m pip install --upgrade pip uv
 
       - run:
           name: Install deps (uv.lock)
