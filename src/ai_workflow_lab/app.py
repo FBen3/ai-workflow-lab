@@ -1,4 +1,5 @@
 import os
+import threading
 import time
 from importlib import metadata
 
@@ -15,16 +16,16 @@ def get_package_info() -> dict[str, str]:
 def create_app() -> Flask:
     app = Flask(__name__)
 
-    # Metrics tracking (moved inside create_app)
     app_start_time = time.monotonic()
     request_count = 0
+    count_lock = threading.Lock()
 
     @app.before_request
     def count_request():
         nonlocal request_count
-        # Exclude /metrics from the counter
         if request.path != "/metrics":
-            request_count += 1
+            with count_lock:
+                request_count += 1
 
     @app.get("/health")
     def health():
