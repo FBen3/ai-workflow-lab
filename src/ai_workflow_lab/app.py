@@ -1,6 +1,6 @@
 import os
-import time
 import threading
+import time
 from importlib import metadata
 
 from flask import Flask, jsonify, request
