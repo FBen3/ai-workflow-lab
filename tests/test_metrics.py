@@ -51,8 +51,27 @@ def test_metrics_request_count():
     count2 = resp.json["requests"]
 
     # Request count should have increased
-    # count1 is 1 (the first /metrics call)
-    # Then we make /health, /version, and another /metrics
-    # So count2 should be count1 + 3
-    assert count2 > count1
-    assert count2 == count1 + 3
+    # count1 is 0 (/metrics calls are excluded from counting)
+    # Then we make /health, /version (2 requests that count)
+    # So count2 should be count1 + 2
+    assert count1 == 0
+    assert count2 == 2
+    assert count2 == count1 + 2
+
+
+def test_metrics_excludes_itself():
+    """Test that /metrics calls don't increment the counter"""
+    app = create_app()
+    client = app.test_client()
+
+    # Call /metrics multiple times
+    for _ in range(5):
+        resp = client.get("/metrics")
+        assert resp.json["requests"] == 0
+
+    # Make a non-metrics request
+    client.get("/health")
+
+    # Counter should only show 1
+    resp = client.get("/metrics")
+    assert resp.json["requests"] == 1

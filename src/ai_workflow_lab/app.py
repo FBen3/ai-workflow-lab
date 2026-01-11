@@ -2,13 +2,9 @@ import os
 import time
 from importlib import metadata
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 PACKAGE_DISTRIBUTION = "ai-workflow-lab"
-
-# Metrics tracking
-app_start_time = time.time()
-request_count = 0
 
 
 def get_package_info() -> dict[str, str]:
@@ -19,10 +15,16 @@ def get_package_info() -> dict[str, str]:
 def create_app() -> Flask:
     app = Flask(__name__)
 
+    # Metrics tracking (moved inside create_app)
+    app_start_time = time.monotonic()
+    request_count = 0
+
     @app.before_request
     def count_request():
-        global request_count
-        request_count += 1
+        nonlocal request_count
+        # Exclude /metrics from the counter
+        if request.path != "/metrics":
+            request_count += 1
 
     @app.get("/health")
     def health():
@@ -38,7 +40,7 @@ def create_app() -> Flask:
 
     @app.get("/metrics")
     def metrics():
-        uptime = int(time.time() - app_start_time)
+        uptime = int(time.monotonic() - app_start_time)
         return jsonify(uptime=uptime, requests=request_count)
 
     return app
