@@ -1,10 +1,9 @@
 version: 2.1
 
 jobs:
-  test:
+  build_env:
     docker:
       - image: cimg/python:3.13
-
     steps:
       - checkout
 
@@ -13,15 +12,31 @@ jobs:
           command: python -m pip install --upgrade pip uv
 
       - run:
-          name: Install deps (uv.lock)
+          name: Sync deps (create .venv)
           command: uv sync --frozen
 
-      - run:
-          name: Run tests
-          command: uv run pytest -q
+      - persist_to_workspace:
+          root: .
+          paths: 
+            - .
+            - .venv
+
+  test:
+    docker:
+      - image: cimg/python:3.13
+    steps:
+     - attach_workspace:
+        at: .
+
+     - run:
+        name: Run tests
+        command: uv run pytest -q
 
 workflows:
   ci:
     jobs:
-      - test
+      - build_env
+      - test:
+          requires: 
+            - build_env
 
