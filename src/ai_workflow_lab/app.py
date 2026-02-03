@@ -1,6 +1,7 @@
 import os
 import threading
 import time
+from datetime import datetime
 from importlib import metadata
 
 from flask import Flask, jsonify, request
@@ -43,6 +44,10 @@ def create_app() -> Flask:
     def metrics():
         uptime = int(time.monotonic() - app_start_time)
         return jsonify(uptime=uptime, requests=request_count)
+
+    @app.get("/day")
+    def day():
+        return jsonify(day=datetime.now().strftime("%A"))
 
     return app
 
