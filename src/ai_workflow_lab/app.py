@@ -8,6 +8,10 @@ def create_app() -> Flask:
     def health():
         return jsonify(status="ok")
 
+    @app.get("/version")
+    def version():
+        return jsonify(version="0.1.0")
+
     @app.get("/")
     def index():
         return "ai-workflow-lab: hello"
