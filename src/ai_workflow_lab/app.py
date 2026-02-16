@@ -1,3 +1,5 @@
+from importlib.metadata import PackageNotFoundError, distribution
+
 from flask import Flask, jsonify
 
 
@@ -11,6 +13,15 @@ def create_app() -> Flask:
     @app.get("/")
     def index():
         return "ai-workflow-lab: hello"
+
+    @app.get("/version")
+    def version():
+        try:
+            dist = distribution("ai-workflow-lab")
+        except PackageNotFoundError:
+            return jsonify(name=None, version=None)
+
+        return jsonify(name=dist.metadata.get("Name"), version=dist.version)
 
     return app
 
