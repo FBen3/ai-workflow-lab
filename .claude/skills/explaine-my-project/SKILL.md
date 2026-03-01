@@ -3,7 +3,7 @@ name: explain-my-project
 description: Explains the project and provides a visual diagram. Use this when the user asks "how does this project work?"
 ---
 
-Expanatio format:
+Explanation format:
 
 1. **Conversational explanation**: Explain the project from a high level
 2. **Draw a diagram**: Use ASCII art to show the flow, structure, or relationships
