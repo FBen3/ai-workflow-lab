@@ -1,0 +1,1 @@
+Create a PR with a verb-based descriptive title. Always use GitHub CLI. If you haven't already made a commit, do that first.
