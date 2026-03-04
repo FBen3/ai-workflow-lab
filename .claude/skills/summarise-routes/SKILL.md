@@ -9,3 +9,4 @@ Look at the file `src/ai_workflow_lab/app.py` and provide a concise summary of e
 - A one-sentence description of what it does
 
 Format the output as a simple markdown table.
+
