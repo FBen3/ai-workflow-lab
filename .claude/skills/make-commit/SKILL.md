@@ -11,7 +11,7 @@ allowed-tools: Bash(git *), Bash(gh *)
 
 # Format
 
-Create a commit that follows the form `<type>(optional-scope): <description>`.
+Create a commit that follows the form `<type>(optional-scope): <description>`. The <description> should start with a capital letter, e.g. `feat: Add version/ endpoint`.
 
 Typical types:
 - fix: a bug fix
