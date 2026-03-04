@@ -9,3 +9,11 @@ def test_health():
     assert resp.status_code == 200
     assert resp.json == {"status": "ok"}
 
+
+def test_ping():
+    app = create_app()
+    client = app.test_client()
+    resp = client.get("/ping")
+
+    assert resp.status_code == 200
+

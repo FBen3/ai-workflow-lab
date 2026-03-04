@@ -12,6 +12,10 @@ def create_app() -> Flask:
     def version():
         return jsonify(version="0.1.0")
 
+    @app.get("/ping")
+    def ping():
+        return jsonify(pong=True)
+
     @app.get("/")
     def index():
         return "ai-workflow-lab: hello"
