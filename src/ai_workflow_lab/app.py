@@ -1,5 +1,6 @@
-from importlib.metadata import PackageNotFoundError, distribution
 from datetime import datetime
+from importlib.metadata import PackageNotFoundError, distribution
+
 from flask import Flask, jsonify
 
 
@@ -26,6 +27,10 @@ def create_app() -> Flask:
     @app.get("/day")
     def day():
         return jsonify(day=datetime.now().strftime("%Y-%m-%d"))
+
+    @app.get("/year")
+    def year():
+        return jsonify(year=datetime.now().strftime("%Y"))
 
     return app
 
