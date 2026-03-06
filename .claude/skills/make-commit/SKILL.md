@@ -1,45 +1,54 @@
 ---
 name: make-a-commit
-description: Looks at staged and unstaged changes and makes 1 (or more) atomic commits, following the  `<type>(optional-scope): <description>` format for the commit message.
-allowed-tools: Bash(git *), Bash(gh *)
+description: Stages and commits changes using conventional commits format. Handles atomic splitting across multiple commits.
+disable-model-invocation: true
+allowed-tools: Bash(git *)
 ---
 
-# Strategy
+# Make Commit
 
-- Check if there are any staged changes. If there are then evaluate whether it makes sense to commit all of them in 1 commit, or whether to split them.
-- Check if there are any unstaged changes. If there are, evaluate whether they should all be in 1 commit, or if you need to stage and commit them separately.
+## Step 1 - Gather state
 
-# Format
+Consider the following data and reason about what you see:
 
-Create a commit that follows the form `<type>(optional-scope): <description>`. The <description> should start with a capital letter, e.g. `feat: Add version/ endpoint`.
+**What's staged, unstagged, untracked**
+!`git status -sb`
 
-Typical types:
-- fix: a bug fix
-- feat: a new feature
-- docs: documentation only
-- test: add/fix tests
-- refactor: restructure code, no behavior change
-- perf: performance improvement
-- style: formatting (e.g. whitespace, lint fixes), no behavior change
-- build: build system/deps
-- ci: CI config/scripts
-- chore: maintenance work
-- revert: revert a previous commit
+**Overall scope of changes**
+!`git diff --stat HEAD`
 
-If the change does not fall into any of above categories, you're allowed to make your own short type tag, but this is discouraged and should only be done when absolutely necessary.
+**Exact staged changes**
+!`git diff --cached`
 
-The message should be descriptive and impertaive (e.g. "Fix ...") and follow the form:
-```
-Add a short commit message (<=72 chars) 
+**Exact unstaged changes**
+!`git diff`
 
-Optional, more detailed explanatory text. Wraped 
-to 72 characters. The blank line separating the 
-summary from the body is critical (unless you omit 
-the body entirely).
+## Step 2 - Plan
 
-Further paragraphs come after blank lines.
+Reason about atomicity: should this be one commit or several? 
+Do you need to run more git commands for better reasoning?
+A commit is atomic if it represents one logical change. If staged and unstaged
+changes are unrelated, they should be separate commits. If a file has both
+staged and unstaged hunks, decide whether the unstaged portion belongs with
+this commit or a future one - if the latter, leave it unstaged.
 
-- Bullet points are okay, too.
-- Typically a hyphen or asterisk is used for the bullet, followed by a
-single space. Use a hanging indent.
-```
+Present your proposed commit plan to the user:
+- List each proposed commit with its message and which files/hunks it covers
+- Wait for explicit approval before proceeding
+
+## Step 3 - Execute
+
+Once approved, execute the commits in order.
+For each commit:
+- Stage only the relevant files/hunks (`git add` or `git add -p` if needed)
+- Commit with the message from the approved plan
+
+## Commit format
+
+Use `<type>(optional-scope): <description>` where description starts with a
+capital letter. Keep the subject line under 72 chars. Add a body if the subject
+alone doesn't explain the why.
+
+Types: fix, feat, docs, test, refactor, perf, style, build, ci, chore, revert.
+Only invent a new type if none of the above fit - this should be rare.
+
