@@ -32,16 +32,12 @@ changes are unrelated, they should be separate commits. If a file has both
 staged and unstaged hunks, decide whether the unstaged portion belongs with
 this commit or a future one - if the latter, leave it unstaged.
 
-Present your proposed commit plan to the user:
-- List each proposed commit with its message and which files/hunks it covers
-- Wait for explicit approval before proceeding
-
 ## Step 3 - Execute
 
-Once approved, execute the commits in order.
+Execute the commits in order.
 For each commit:
 - Stage only the relevant files/hunks (`git add` or `git add -p` if needed)
-- Commit with the message from the approved plan
+- Commit with the message from the crafted plan
 
 ## Commit format
 
