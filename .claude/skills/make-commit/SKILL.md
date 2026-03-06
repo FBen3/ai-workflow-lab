@@ -1,13 +1,12 @@
 ---
 name: make-a-commit
-description: Stages and commits changes using conventional commits format. Handles atomic splitting across multiple commits.
-disable-model-invocation: true
+description: Stages and commits changes using the conventional commits format. Handles atomic splitting across multiple commits.
 allowed-tools: Bash(git *)
 ---
 
-# Make Commit
+# Create Commit
 
-## Step 1 - Gather state
+## Step 1 - Gather state and Analyze
 
 Consider the following data and reason about what you see:
 
@@ -26,7 +25,7 @@ Consider the following data and reason about what you see:
 ## Step 2 - Plan
 
 Reason about atomicity: should this be one commit or several? 
-Do you need to run more git commands for better reasoning?
+Do you need to run other git commands to gather more information?
 A commit is atomic if it represents one logical change. If staged and unstaged
 changes are unrelated, they should be separate commits. If a file has both
 staged and unstaged hunks, decide whether the unstaged portion belongs with
@@ -37,7 +36,7 @@ this commit or a future one - if the latter, leave it unstaged.
 Execute the commits in order.
 For each commit:
 - Stage only the relevant files/hunks (`git add` or `git add -p` if needed)
-- Commit with the message from the crafted plan
+- Commit with a descriptive message   
 
 ## Commit format
 
