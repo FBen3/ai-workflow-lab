@@ -1,5 +1,5 @@
 ---
-name: make-a-commit
+name: make-commit
 description: Stages and commits changes using the conventional commits format. Handles atomic splitting across multiple commits.
 allowed-tools: Bash(git *)
 ---
