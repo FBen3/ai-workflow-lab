@@ -19,6 +19,9 @@ Never use pip, python, or pytest directly — always go through uv.
 - After completing a task, give a short summary of what you did, then run `git status -sb`.
 - Before any commit: run `uv run ruff check .` and `uv run pytest`. Fix any issues before committing.
 
+## MCP servers
+- `filesystem`: uses `.` (current working directory = project root) — no absolute path needed.
+
 ## Code conventions
 - Follow existing patterns in the codebase.
 - All routes go in app.py inside the create_app() factory.
