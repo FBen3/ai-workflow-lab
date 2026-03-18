@@ -1,6 +1,6 @@
 ---
 name: code-improvement-reviewer
-description: "Use this agent when you want to improve the quality of recently written or modified code, or when you want a thorough review of specific files for readability, performance, and best practices issues. This agent is ideal after writing new features, refactoring sessions, or when you want a second opinion on your implementation.
+description: Use this agent when you want to improve the quality of recently written or modified code, or when you want a thorough review of specific files for readability, performance, and best practices issues. This agent is ideal after writing new features, refactoring sessions, or when you want a second opinion on your implementation.
 tools: Glob, Grep, Read, WebFetch, WebSearch, ListMcpResourcesTool, ReadMcpResourceTool
 model: sonnet
 color: green
